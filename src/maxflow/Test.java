@@ -10,7 +10,7 @@ public class Test {
         GraphInput.LoadSimpleGraph(graph, graphpath);
         int result1 = FordFulkerson.maxflow(graph);
         int result2 = ScalingFordFulkerson.maxflow(graph);
-        int result3 = PreﬂowPush.maxflow(graph);
+        int result3 = PreflowPush.maxflow(graph);
         System.out.println(result1);
         System.out.println(result2);
         System.out.println(result3);
