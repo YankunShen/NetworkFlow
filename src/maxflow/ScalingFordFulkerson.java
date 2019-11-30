@@ -3,7 +3,14 @@ package maxflow;
 import simplegraph.SimpleGraph;
 
 public class ScalingFordFulkerson {
-    public static int maxflow(SimpleGraph graph) {
+    private SimpleGraph graph;
+
+    public ScalingFordFulkerson(SimpleGraph graph)
+    {
+        this.graph = new SimpleGraph();
+    }
+
+    public int maxflow(SimpleGraph graph) {
 
         return 0;
     }
