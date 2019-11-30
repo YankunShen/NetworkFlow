@@ -15,7 +15,7 @@ public class Test {
         SimpleGraph graph2 = new SimpleGraph();
         GraphInput.LoadSimpleGraph(graph2, graphpath);
         ScalingFordFulkerson SFF = new ScalingFordFulkerson(graph2);
-        int result2 = FF.maxflow(graph2);
+        int result2 = SFF.maxflow(graph2);
 
 
         SimpleGraph graph3 = new SimpleGraph();
