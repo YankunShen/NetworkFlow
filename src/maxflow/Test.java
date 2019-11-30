@@ -5,7 +5,7 @@ import simplegraph.GraphInput;
 
 public class Test {
     public static void main(String[] args) {
-        String graphpath = "src/generation/Bipartite/g1.txt";
+        String graphpath = "src/generation/Bipartite/g1.txt"; // can be modified to any other graph you want to test.
         SimpleGraph graph = new SimpleGraph();
         GraphInput.LoadSimpleGraph(graph, graphpath);
         int result1 = FordFulkerson.maxflow(graph);
