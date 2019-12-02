@@ -18,6 +18,7 @@ class RandomGraph {
 			int[][] Graph = new int[vertices][vertices];
 			int n, m;
 
+
 			for (n = 0; n < vertices; n++)
 				for (m = n + 1; m < vertices; m++) {
 					int randomInt = (random.nextInt((maxCapacity - minCapacity + 1)) + minCapacity);
@@ -82,13 +83,13 @@ class RandomGraph {
 		System.out.println("\n\n---------------------------------------------------");
 		System.out.print("Enter number of vertices: \t");
 		n = GetInt();
-		System.out.print("Enter minimum capacity: \t\t\t");
+		System.out.print("Enter minimum capacity: \t");
 		minCapacity = GetInt();
-		System.out.print("Enter maximum capacity: \t\t\t");
+		System.out.print("Enter maximum capacity: \t");
 		maxCapacity = GetInt();
-		System.out.println("Enter the density: \t\t");
+		System.out.print("Enter the density: \t");
 		density = GetInt();
-		System.out.print("Enter the output file name: \t\t\t");
+		System.out.print("Enter the output file name: \t");
 		String fileName = GetString() + ".txt";
 		System.out.println("---------------------------------------------------\n");
 		buildGraph(fileName, n, density, maxCapacity,minCapacity);

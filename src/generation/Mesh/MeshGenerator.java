@@ -5,8 +5,7 @@ package generation.Mesh;/*
  * Apaporn Boonyaratta, Richard Hill, Quang Lu, & David Thaler
  * November 21, 2008
  */
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.Random;
 
 /**
@@ -51,14 +50,22 @@ public class MeshGenerator {
   /** True if the edge capacities are constant. */
   private boolean constCap;
 
+  private String fileName;
+
   /**
    * The run method.
    */
-  public void generate() {
-
+  public void generate() throws IOException {
+    String directory = System.getProperty("user.dir");
+    System.out.print("Enter the output file name: \t\t\t");
+    BufferedReader stringIn = new BufferedReader (new InputStreamReader(System.in));
+    String fileName = stringIn.readLine();
+    fileName = fileName + ".txt";
+    PrintWriter outFile = new  PrintWriter(new FileWriter(new File(directory, fileName)));
     // the s to first column links
     for (int i = 1; i <= m; i++) {
       out.printf("s (%d,1) %d\n", i, capacity());
+      outFile.println("s ("+i+",1) "+ capacity());
     }
 
     // left to right links across the rows
@@ -79,7 +86,10 @@ public class MeshGenerator {
     // last column to t links
     for (int i = 1; i <= m; i++) {
       out.printf("(%d,%d) t %d\n", i, n, capacity());
+      outFile.println("s ("+ i +"," + n + ") "+ capacity());
     }
+    System.out.println("\n\nOutput is created at: \t" + directory + "\\" + fileName);
+    outFile.close();
   }
 
   /**
@@ -88,7 +98,7 @@ public class MeshGenerator {
    * are represented as (row #, column #). This method should be called with the
    * correct capacity for this node; it doesn't generate them.
    * 
-   * @param i1 -
+   * @param i1-
    *          first node row #
    * @param j1-
    *          first node column #
@@ -102,6 +112,8 @@ public class MeshGenerator {
   private void line(int i1, int j1, int i2, int j2, int cap) {
     out.printf("(%d,%d) (%d,%d) %d\n", i1, j1, i2, j2, cap);
   }
+
+
 
   /**
    * Utility method to generate edge capacities for mesh graph generator. These
@@ -165,7 +177,7 @@ public class MeshGenerator {
    * @param args-
    *          command line args
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
 
     MeshGenerator mesh = new MeshGenerator(args);
     mesh.generate();
