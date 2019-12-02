@@ -31,12 +31,9 @@ public class Test {
         long endTime3 = System.currentTimeMillis();
         long time3 = endTime3 - beginTime3;
 
-        System.out.println(result1);
-        System.out.println(result2);
-        System.out.println(result3);
-
-        System.out.println(time1);
-        System.out.println(time2);
-        System.out.println(time3);
+        
+        System.out.println("Ford-Fulkerson" +  " Max flow: " + result1 + " in " + time1 + " ms");
+        System.out.println("Scalling-Ford-Fulkerson" +  " Max flow: " + result2 + " in " + time2 + " ms");
+        System.out.println("Pre Flow Push" +  " Max flow: " + result3 + " in " + time3 + " ms");
     }
 }
