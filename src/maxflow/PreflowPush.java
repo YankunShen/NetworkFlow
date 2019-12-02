@@ -3,17 +3,13 @@ package maxflow;
 import flowgraph.*;
 import simplegraph.SimpleGraph;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-
 public class PreflowPush {
-
     public double findMaxFlow(SimpleGraph simpleGraph) throws Exception {
         NetworkGraph graph = new NetworkGraph(simpleGraph);
-        NetworkVertex source = graph.getSource();
         VertexQueue exceedQueue = new VertexQueue();
 
         // Start with initial labeling and preflow
+        NetworkVertex source = graph.getSource();
         source.setHeight(graph.numberOfVertices());
         for (NetworkEdge edge : source.getEdges()) {
             edge.increaseFlow(edge.getResidualCapacity());
@@ -24,28 +20,24 @@ public class PreflowPush {
         while (!exceedQueue.isEmpty()) {
             NetworkVertex vertex = exceedQueue.pop();
             NetworkEdge edge = vertex.getLessHeightNeighborEdge();
-            if (edge == null) {
-                // No neighbor with less height, relabel
-                vertex.incrementHeight();
+            if (edge != null) {
+                // push
+                double flow = Math.min(edge.getResidualCapacity(), vertex.getExcess());
+                edge.increaseFlow(flow);
 
-                // Add vertex back
-                exceedQueue.add(vertex);
-            } else {
-                double increment = Math.min(edge.getResidualCapacity(), vertex.getExcess());
-                edge.increaseFlow(increment);
-
-                // Add origin if there is still excess
+                // check whether origin and destination excess
                 if (edge.getOrigin().getExcess() > 0) {
                     exceedQueue.add(edge.getOrigin());
                 }
-
-                // Add dest if excess > 0
                 if (edge.getDest().getExcess() > 0) {
                     exceedQueue.add(edge.getDest());
                 }
+            } else {
+                // relabel
+                vertex.setHeight(vertex.getHeight() + 1);
+                exceedQueue.add(vertex);
             }
         }
-
         return source.getOutgoingFlow();
     }
 }

@@ -119,13 +119,6 @@ public class NetworkVertex {
 	}
 	
 	/**
-	* Increment height label of this vertex by 1.
-	*/
-	public void incrementHeight() {
-		this.height += 1;
-	}
-	
-	/**
 	* Get edge outgoing from this vertex such that other end point of that edge
 	* has height less than this vertex.
 	* @return Edge if their is neghboring vertex with height less than this vertex, otherwise null.
