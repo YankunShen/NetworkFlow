@@ -8,16 +8,10 @@ import java.util.LinkedList;
 
 public class PreflowPush {
 
-    private VertexQueue exceedQueue;
-
-    public PreflowPush()
-    {
-        this.exceedQueue =  new VertexQueue();
-    }
-
     public double findMaxFlow(SimpleGraph simpleGraph) throws Exception {
         NetworkGraph graph = new NetworkGraph(simpleGraph);
         NetworkVertex source = graph.getSource();
+        VertexQueue exceedQueue = new VertexQueue();
 
         // Start with initial labeling and preflow
         source.setHeight(graph.numberOfVertices());
