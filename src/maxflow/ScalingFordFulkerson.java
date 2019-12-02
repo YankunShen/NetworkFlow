@@ -6,16 +6,11 @@ import simplegraph.SimpleGraph;
 import java.util.LinkedList;
 
 public class ScalingFordFulkerson {
-    private NetworkGraph graph;
     private double minResidualCapacity;
     protected static double INF = Double.MAX_VALUE/2;
 
-    public ScalingFordFulkerson()
-    {
-    }
-
     public double findMaxFlow(SimpleGraph simpleGraph) throws Exception {
-        this.graph = new NetworkGraph(simpleGraph);
+        NetworkGraph graph = new NetworkGraph(simpleGraph);
         NetworkVertex source = graph.getSource();
         //Outgoing Capacity from Source
         double sourceOutgoingCapacity = source.getOutgoingCapacity();
@@ -28,7 +23,7 @@ public class ScalingFordFulkerson {
             do{
                 graph.resetVisited();
                 f = dfs(graph, graph.getSource(), INF);
-            }while(f != 0);
+            } while(f != 0);
         }
 
         return source.getOutgoingFlow();

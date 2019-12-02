@@ -13,6 +13,9 @@ public class VertexQueue {
         this.verticesSet = new HashSet<String>();
     }
 
+    /**
+     * @param vertex the vertex you want to add to the queue
+     */
     public void add(NetworkVertex vertex) {
         if (vertex.isSourceOrSink()) {
             return;
@@ -22,6 +25,9 @@ public class VertexQueue {
         }
     }
 
+    /**
+     * @return a vertex popped from the queue
+     */
     public NetworkVertex pop() {
         NetworkVertex vertex = verticesList.remove();
         verticesSet.remove(vertex.getName());
