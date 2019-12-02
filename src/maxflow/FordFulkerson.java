@@ -6,13 +6,12 @@ import flowgraph.*;
 import java.util.LinkedList;
 
 public class FordFulkerson {
-    private SimpleGraph simpleGraph;
     private double minResidualCapacity;
     protected static double INF = Double.MAX_VALUE/2;
 
-    public FordFulkerson(SimpleGraph graph)
+    public FordFulkerson()
     {
-        this.simpleGraph = graph;
+
     }
 
     public double findMaxFlow(SimpleGraph simpleGraph) throws Exception {
