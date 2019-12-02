@@ -25,7 +25,7 @@ public class Test {
 
         SimpleGraph graph3 = new SimpleGraph();
         GraphInput.LoadSimpleGraph(graph3, graphpath);
-        PreflowPush PFP = new PreflowPush(graph3);
+        PreflowPush PFP = new PreflowPush();
         long beginTime3 = System.currentTimeMillis();
         double result3 = PFP.findMaxFlow(graph3);
         long endTime3 = System.currentTimeMillis();
