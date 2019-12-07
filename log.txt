@@ -1,0 +1,34 @@
+Opened Bipartite-s50-t50.txt for input.
+Successfully loaded 1314 lines.
+Start to execute algorithms.
+Ford-Fulkerson Max flow: 1723.0 in 80 ms
+Scalling-Ford-Fulkerson Max flow: 1723.0 in 253 ms
+Pre Flow Push Max flow: 1723.0 in 93 ms
+
+Opened Bipartite-s100-t100.txt for input.
+Successfully loaded 5205 lines.
+Start to execute algorithms.
+Ford-Fulkerson Max flow: 3468.0 in 250 ms
+Scalling-Ford-Fulkerson Max flow: 3468.0 in 423 ms
+Pre Flow Push Max flow: 3468.0 in 93 ms
+
+Opened Bipartite-s250-t250.txt for input.
+Successfully loaded 31792 lines.
+Start to execute algorithms.
+Ford-Fulkerson Max flow: 9907.0 in 1758 ms
+Scalling-Ford-Fulkerson Max flow: 9907.0 in 1285 ms
+Pre Flow Push Max flow: 9907.0 in 786 ms
+
+Opened Bipartite-s500-t500.txt for input.
+Successfully loaded 126183 lines.
+Start to execute algorithms.
+Ford-Fulkerson Max flow: 37417.0 in 9561 ms
+Scalling-Ford-Fulkerson Max flow: 37417.0 in 7849 ms
+Pre Flow Push Max flow: 37417.0 in 4848 ms
+
+Opened Bipartite-s1000-t1000.txt for input.
+Successfully loaded 501936 lines.
+Start to execute algorithms.
+Ford-Fulkerson Max flow: 129185.0 in 148123 ms
+Scalling-Ford-Fulkerson Max flow: 129185.0 in 8673 ms
+Pre Flow Push Max flow: 129185.0 in 172 ms

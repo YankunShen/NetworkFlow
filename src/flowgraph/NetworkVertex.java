@@ -3,22 +3,15 @@ package flowgraph;
 import java.util.*;
 
 /**
-* Represents a vertex in the flow graph.
-* @author
-* @version 1.0
-* @since
+* A vertex in the network graph.
 */
 public class NetworkVertex {
-	// name of vertex
 	private String name;
-	
-	// table from edge name of edge object
+
 	Hashtable<String, NetworkEdge> edges;
-	
-	// excess flow, useful for preflow algorithm. For Ford Fulkerson type algorithm, excess = 0
+
+	// used in pre-flow push
 	private double excess;
-	
-	// height, used in preflow algorithm
 	private int height;
 	
 	private boolean visited;
@@ -29,7 +22,7 @@ public class NetworkVertex {
 	*/
 	public NetworkVertex(String name) {
 		this.name = name;
-		this.edges = new Hashtable<String, NetworkEdge>();
+		this.edges = new Hashtable<>();
 	}
 
 	/**
@@ -38,9 +31,9 @@ public class NetworkVertex {
 	* @throws Exception If origin of given edge is not this vertex.
 	*/
 	public void addEdge(NetworkEdge edge) throws Exception {
-		if (edge.getOrigin().getName() != this.name) {
+		if (!edge.getFirstEndpoint().getName().equals(this.name)) {
 			// Adding edge to this vertex but in the edge origin is specified as some other vertex
-			throw new Exception("Adding edge " + edge.getName() + " with origin vertex " + edge.getOrigin().getName() + " on " + this.name);
+			throw new Exception("Adding edge " + edge.getName() + " with origin vertex " + edge.getFirstEndpoint().getName() + " on " + this.name);
 		}
 		
 		this.edges.put(edge.getName(), edge);
@@ -63,28 +56,26 @@ public class NetworkVertex {
 	}
 
 	/**
-	* Whether this vertex has been visited or not. Useful in case of graph traversals like DFS.
-	* @return True if vertex has been marked as visited, false otherwise.
+	* @return whether the vertex has been set as visited
 	*/
 	public boolean isVisited() {
 		return this.visited;
 	}
 	
 	/**
-	* Mark this vertex as visited.
+	* set the vertex as visited.
 	*/
-	public void markVisited() {
+	public void setVisited() {
 		this.visited = true;
 	}
-	
+
 	/**
-	* Reset the visited flag on this vertex.
+	 * set the vertex as not visited.
 	*/
-	public void resetVisited() {
+	public void setNotVisited() {
 		this.visited = false;
 	}
-	
-	
+
 	/**
 	* Get excess of this vertex.
 	* @return Excess of this vertex.
@@ -123,39 +114,22 @@ public class NetworkVertex {
 	* has height less than this vertex.
 	* @return Edge if their is neghboring vertex with height less than this vertex, otherwise null.
 	*/
-	public NetworkEdge getLessHeightNeighborEdge() {
+	public NetworkEdge getLowerEdge() {
 		for (NetworkEdge edge : this.edges.values()) {
-			if (edge.getResidualCapacity() > 0 && edge.getDest().height < this.height) {
+			if (edge.getResidualCapacity() > 0 && edge.getSecondEndpoint().height < this.height) {
 				return edge;
 			}
 		}
-		
 		return null;
 	}
 	
 	/**
-	* Get outgoing flow from this vertex.
-	* @return Total outgoing flow from this vertex.
-	*/
-	public double getOutgoingFlow() {
-		double flow = 0;
-		for (NetworkEdge edge : this.edges.values()) {
-			if (!edge.isBackwardEdge()) {
-				flow += edge.getFlow();
-			}
-		}
-		
-		return flow;
-	}
-	
-	/**
-	* Get total outgoing capacity from this vertex.
-	* @return Total outgoing capacity from this vertex.
+	* @return The sum of outgoing capacity of the vertex.
 	*/
 	public double getOutgoingCapacity() {
 		double capacity = 0;
 		for (NetworkEdge edge : this.edges.values()) {
-			if (!edge.isBackwardEdge()) {
+			if (!edge.isBackward()) {
 				capacity += edge.getCapacity();
 			}
 		}
@@ -164,20 +138,11 @@ public class NetworkVertex {
 	}
 	
 	/**
-	* Get outgoing edges from this vertex. This also includes backward edges.
 	* @return Array of outgoing edges from this vertex.
 	*/
 	public NetworkEdge[] getEdges() {
 		NetworkEdge[] edgeArray = new NetworkEdge[this.edges.size()];
 		this.edges.values().toArray(edgeArray);
 		return edgeArray;
-	}
-	
-	/**
-	* Whether the vertex is source or sink.
-	* @return True if vertex is either source or sink, otherwise false.
-	*/
-	public boolean isSourceOrSink() {
-		return this.name.equals("s") || this.name.equals("t");
 	}
 }

@@ -8,29 +8,28 @@ public class PreflowPush {
         NetworkGraph graph = new NetworkGraph(simpleGraph);
         VertexQueue exceedQueue = new VertexQueue();
 
-        // Start with initial labeling and preflow
+        // start with initial labeling and preflow
         NetworkVertex source = graph.getSource();
-        source.setHeight(graph.numberOfVertices());
+        source.setHeight(graph.getVerticesNum());
         for (NetworkEdge edge : source.getEdges()) {
             edge.increaseFlow(edge.getResidualCapacity());
-            exceedQueue.add(edge.getDest());
+            exceedQueue.add(edge.getSecondEndpoint());
         }
 
-        // While there is a node with positive excess
+        // while there is a excess node
         while (!exceedQueue.isEmpty()) {
             NetworkVertex vertex = exceedQueue.pop();
-            NetworkEdge edge = vertex.getLessHeightNeighborEdge();
+            NetworkEdge edge = vertex.getLowerEdge();
             if (edge != null) {
                 // push
                 double flow = Math.min(edge.getResidualCapacity(), vertex.getExcess());
                 edge.increaseFlow(flow);
 
-                // check whether origin and destination excess
-                if (edge.getOrigin().getExcess() > 0) {
-                    exceedQueue.add(edge.getOrigin());
+                if (edge.getFirstEndpoint().getExcess() > 0) {
+                    exceedQueue.add(edge.getFirstEndpoint());
                 }
-                if (edge.getDest().getExcess() > 0) {
-                    exceedQueue.add(edge.getDest());
+                if (edge.getSecondEndpoint().getExcess() > 0) {
+                    exceedQueue.add(edge.getSecondEndpoint());
                 }
             } else {
                 // relabel
@@ -38,7 +37,7 @@ public class PreflowPush {
                 exceedQueue.add(vertex);
             }
         }
-        return source.getOutgoingFlow();
+        return graph.getGraphFlow();
     }
 }
 

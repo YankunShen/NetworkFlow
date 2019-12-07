@@ -21,12 +21,12 @@ public class ScalingFordFulkerson {
         }
         for(double f = 0; minResidualCapacity > 0; minResidualCapacity/=2){
             do{
-                graph.resetVisited();
+                graph.setNotVisited();
                 f = dfs(graph, graph.getSource(), INF);
             } while(f != 0);
         }
 
-        return source.getOutgoingFlow();
+        return graph.getGraphFlow();
     }
 
     /**
@@ -47,11 +47,11 @@ public class ScalingFordFulkerson {
             return flow;
 
         // Mark origin as visited
-        origin.markVisited();
+        origin.setVisited();
 
         for (NetworkEdge edge : origin.getEdges()) {
-            if (edge.getResidualCapacity() >= minResidualCapacity && !edge.getDest().isVisited()) {
-                double bottleneck = dfs(graph, edge.getDest(), Math.min(flow, edge.getResidualCapacity()));
+            if (edge.getResidualCapacity() >= minResidualCapacity && !edge.getSecondEndpoint().isVisited()) {
+                double bottleneck = dfs(graph, edge.getSecondEndpoint(), Math.min(flow, edge.getResidualCapacity()));
                 if(bottleneck > 0){
                     edge.increaseFlow(bottleneck);
                     return bottleneck;

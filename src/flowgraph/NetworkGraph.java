@@ -4,10 +4,7 @@ import java.util.*;
 import simplegraph.*;
 
 /**
-* Represents a flow graph.
-* @author
-* @version 1.0
-* @since
+* Represents a network graph.
 */
 public class NetworkGraph {
 	private Hashtable<String, NetworkVertex> vertices;
@@ -19,9 +16,9 @@ public class NetworkGraph {
 	* @throws Exception If graph generation fails.
 	*/
 	public NetworkGraph(SimpleGraph graph) throws Exception {
-		this.vertices = new Hashtable<String, NetworkVertex>();
-		this.edges = new Hashtable<String, NetworkEdge>();
-		
+		this.vertices = new Hashtable<>();
+		this.edges = new Hashtable<>();
+
 		Iterator vertexIterator = graph.vertices();
 		while (vertexIterator.hasNext()) {
 			Vertex vertex = (Vertex)vertexIterator.next();
@@ -33,14 +30,14 @@ public class NetworkGraph {
 		while (edgeIterator.hasNext()) {
 			Edge edge = (Edge)edgeIterator.next();
 			
-			NetworkVertex origin = this.vertices.get(edge.getFirstEndpoint().getName());
+			NetworkVertex v1 = this.vertices.get(edge.getFirstEndpoint().getName());
 			NetworkVertex dest = this.vertices.get(edge.getSecondEndpoint().getName());
 			double capacity = (double)edge.getData();
-			
-			this.addEdge(origin, dest, capacity);
+
+			this.addEdge(v1, dest, capacity);
 		}
 	}
-	
+
 	/**
 	* Get vertices in the graph.
 	* @return Collection of vertices in the graph.
@@ -53,20 +50,20 @@ public class NetworkGraph {
 	* Add vertex in the graph.
 	* @param vertex Vertex to add in the graph.
 	*/
-	public void addVertex(NetworkVertex vertex) {
+	private void addVertex(NetworkVertex vertex) {
 		this.vertices.put(vertex.getName(), vertex);
 	}
 	
 	/**
 	* Add edge in the graph.
-	* @param origin Origin vertex of edge to add.
-	* @param dest Destination vertex of edge to add.
+	* @param v1 v1 vertex of edge to add.
+	* @param v2 v2 vertex of edge to add.
 	* @param capacity Capacity of the edge to add.
 	* @throws Exception If addition of edge fails
 	*/
-	public void addEdge(NetworkVertex origin, NetworkVertex dest, double capacity) throws Exception {
-		NetworkEdge edge = new NetworkEdge(origin, dest, capacity);
-		origin.addEdge(edge);
+	private void addEdge(NetworkVertex v1, NetworkVertex v2, double capacity) throws Exception {
+		NetworkEdge edge = new NetworkEdge(v1, v2, capacity);
+		v1.addEdge(edge);
 		this.edges.put(edge.getName(), edge);
 	}
 	
@@ -79,28 +76,20 @@ public class NetworkGraph {
 	}
 	
 	/**
-	* Get sink vertex in the graph.
-	* @return Sink vertex.
-	*/
-	public NetworkVertex getSink() {
-		return this.getVertex("t");
-	}
-	
-	/**
 	* Get vertex of given name in the graph.
 	* @param name Name of the vertex to return.
 	* @return Vertex with given name.
 	*/
-	public NetworkVertex getVertex(String name) {
+	private NetworkVertex getVertex(String name) {
 		return this.vertices.get(name);
 	}
 	
 	/**
-	* Reset visited flag on all the vertices in the graph.
+	* set all the vertices in the graph not visited
 	*/
-	public void resetVisited() {
+	public void setNotVisited() {
 		for (NetworkVertex vertex : this.vertices.values()) {
-			vertex.resetVisited();
+			vertex.setNotVisited();
 		}
 	}
 	
@@ -108,16 +97,24 @@ public class NetworkGraph {
 	* Get the number of vertices in the graph.
 	* @return Number of vertices in the graph.
 	*/
-	public int numberOfVertices() {
+	public int getVerticesNum() {
 		return this.vertices.size();
 	}
-	
-	
+
+
 	/**
-	* Get the number of edges in the graph.
-	* @return Number of edges in the graph.
-	*/
-	public int numberOfEdges() {
-		return this.edges.size();
+	 * Get the flow of the graph
+	 * @return The flow of the graph
+	 */
+	public double getGraphFlow() {
+		NetworkVertex source = this.getSource();
+		double flow = 0;
+		for (NetworkEdge edge : source.edges.values()) {
+			if (!edge.isBackward()) {
+				flow += edge.getFlow();
+			}
+		}
+
+		return flow;
 	}
 }

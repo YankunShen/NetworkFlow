@@ -17,7 +17,7 @@ public class VertexQueue {
      * @param vertex the vertex you want to add to the queue
      */
     public void add(NetworkVertex vertex) {
-        if (vertex.isSourceOrSink()) {
+        if (vertex.getName().equals("s") || (vertex.getName().equals("t"))) {
             return;
         }
         if (verticesSet.add(vertex.getName())) {
